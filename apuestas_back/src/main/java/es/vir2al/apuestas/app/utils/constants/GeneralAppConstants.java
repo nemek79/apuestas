@@ -1,0 +1,7 @@
+package es.vir2al.apuestas.app.utils.constants;
+
+public class GeneralAppConstants {
+   
+    public final static String 	  APP_NAME 		= "apuestas"; // dejar todo en minusculas
+
+}

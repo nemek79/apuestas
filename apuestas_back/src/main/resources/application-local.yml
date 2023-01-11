@@ -1,0 +1,19 @@
+server:
+  port: 7001
+logging:
+  config: classpath:log4j-local.xml
+spring:
+  datasource:
+    db:
+      jdbc-url: jdbc:mysql://localhost/apuestasbd?useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/Madrid
+      username: apuestasuser
+      password: apuestasuser
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true

@@ -2,4 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="es.vir2al.apuestas.app.repositories.ApuestasDAO">
 
+ 	<resultMap type="ApuestaVO" id="apuesta" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="fechaAlta" column="fecha_alta" />
+		<result property="fechaEvento" column="fecha_evento" />
+        <result property="fechaAlta" column="fecha_alta" />
+        <result property="tipster.id" column="tipster_id" />
+        <result property="tipster.descripcion" column="tipster_descripcion" />
+        <result property="tipster.comentario" column="tipster_comentario" />
+        <result property="tipoApuesta.id" column="tipoapuesta_id" />
+        <result property="tipoApuesta.descripcion" column="tipoapuesta_descripcion" />
+        <result property="tipoApuesta.comentario" column="tipoapuesta_comentario" /> 
+        <result property="live" column="live" />
+        <result property="reto" column="reto" />
+        <result property="deporte.id" column="deporte_id" />
+        <result property="deporte.descripcion" column="deporte_descripcion" />
+        <result property="deporte.comentario" column="deporte_comentario" />  
+        <result property="evento" column="evento" />
+        <result property="apuesta" column="apuesta" />    
+        <result property="stake" column="stake" />
+        <result property="cuota" column="cuota" />
+        <result property="cantidadApostada" column="cantidadApostada" />
+        <result property="bruto" column="bruto" />    
+        <result property="estadoApuesta.id" column="estadoapuesta_id" />
+        <result property="estadoApuesta.descripcion" column="estadoapuesta_descripcion" />
+        <result property="estadoApuesta.comentario" column="estadoapuesta_comentario" />    
+        <result property="encuentro" column="encuentro" /> 
+        <result property="comentario" column="comentario" /> 
+    </resultMap>   
+
+    <insert id="createApuesta" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_apuestas(id,fecha_alta,fecha_evento,tipster_id,tipo_id,live,reto,deporte_id,evento,apuesta,stake,cuota,cantidad_apostada,
+                                bruto,estado_id,encuentro,comentario)
+        VALUES (null,#{criteria.fechaAlta},#{criteria.fechaEvento},#{criteria.tipster.id},#{criteria.tipoApuesta.id},#{criteria.live},#{criteria.reto}
+                ,#{criteria.deporte.id},#{criteria.evento},#{criteria.apuesta},#{criteria.stake},#{criteria.cuota},#{criteria.cantidadApostada},#{criteria.bruto}
+                ,#{criteria.estadoApuesta.id},#{criteria.encuentro},#{criteria.comentario})
+    </insert>
+
 </mapper>

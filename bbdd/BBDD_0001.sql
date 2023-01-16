@@ -198,3 +198,10 @@ CREATE TABLE t_estadisticas_tipster
 	PRIMARY KEY (fecha, tipster_id, tipo_id)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE t_apuestas
+	ADD COLUMN encuentro VARCHAR(64) ;
+	
+ALTER TABLE t_apuestas
+	ADD COLUMN comentario VARCHAR(512) ;
+	

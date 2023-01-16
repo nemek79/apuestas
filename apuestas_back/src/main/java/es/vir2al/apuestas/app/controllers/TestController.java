@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.vir2al.apuestas.app.domain.ApuestaVO;
 import es.vir2al.apuestas.fwk.domain.responses.BaseResponse;
 import es.vir2al.apuestas.fwk.domain.responses.DataResponse;
 import es.vir2al.apuestas.fwk.domain.responses.DataTableResponse;
@@ -37,17 +38,17 @@ public class TestController {
     }
 
     @GetMapping("/data")
-    public ResponseEntity<DataResponse<String>> data() {
+    public ResponseEntity<DataResponse<ApuestaVO>> data() {
 
         LOGGER.debug("INICIO test.data()");
 
-        String data = "Esto es una cadena de respuesta.";
+        ApuestaVO data = new ApuestaVO();
 
-        DataResponse<String> dataResponse = new DataResponse<String>(data);
+        DataResponse<ApuestaVO> dataResponse = new DataResponse<ApuestaVO>(data);
 
         LOGGER.debug("FINAL test.data()");
 
-        return new ResponseEntity<DataResponse<String>>(dataResponse,HttpStatus.OK);
+        return new ResponseEntity<DataResponse<ApuestaVO>>(dataResponse,HttpStatus.OK);
 
     }
 

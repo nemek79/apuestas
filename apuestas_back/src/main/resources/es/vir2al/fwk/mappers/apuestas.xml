@@ -31,12 +31,113 @@
         <result property="comentario" column="comentario" /> 
     </resultMap>   
 
+	<select id="getApuestaById" resultMap="apuesta"
+		parameterType="map">
+		<include refid="apuestasSelect" />
+		<include refid="apuestasFrom" />
+		<where>
+			<include refid="apuestasJoin" />
+			<include refid="apuestasByIdFilter" />
+		</where>
+	</select>
+
+	<select id="getApuestas" resultMap="apuesta"
+		parameterType="map">
+		<include refid="apuestasSelect" />
+		<include refid="apuestasFrom" />
+		<where>
+			<include refid="apuestasJoin" />
+			<include refid="apuestasFilter" />
+		</where>
+		<include refid="apuestasSort" />
+	</select>
+	
+	<select id="getApuestasCount" resultType="Integer">
+		<include refid="countSelect" />
+		<include refid="apuestasFrom" />
+		<where>
+			<include refid="apuestasJoin" />
+			<include refid="apuestasFilter" />
+		</where>
+	</select>
+
     <insert id="createApuesta" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO t_apuestas(id,fecha_alta,fecha_evento,tipster_id,tipo_id,live,reto,deporte_id,evento,apuesta,stake,cuota,cantidad_apostada,
+        INSERT INTO t_apuestas(id,fecha_alta,fecha_evento,tipster_id,
+								tipo_id,live,reto,deporte_id,evento,apuesta,stake,cuota,cantidad_apostada,
                                 bruto,estado_id,encuentro,comentario)
         VALUES (null,#{criteria.fechaAlta},#{criteria.fechaEvento},#{criteria.tipster.id},#{criteria.tipoApuesta.id},#{criteria.live},#{criteria.reto}
                 ,#{criteria.deporte.id},#{criteria.evento},#{criteria.apuesta},#{criteria.stake},#{criteria.cuota},#{criteria.cantidadApostada},#{criteria.bruto}
                 ,#{criteria.estadoApuesta.id},#{criteria.encuentro},#{criteria.comentario})
     </insert>
+
+    <sql id="apuestasSelect">
+        SELECT ta.id,ta.fecha_alta,ta.fecha_evento,
+				ta.tipster_id,tt.descripcion tipster_descripcion,tt.comentario tipster_comentario,
+			    ta.tipo_id tipoapuesta_id, tta.descripcion tipoapuesta_descripcion, tta.comentario tipoapuesta_comentario,
+			    ta.live,ta.reto,
+				ta.deporte_id deporte_id, td.descripcion deporte_descripcion, td.comentario deporte_comentario,
+				ta.evento,ta.apuesta,ta.stake,ta.cuota,ta.cantidad_apostada,ta.bruto,
+				ta.estado_id estadoapuesta_id, tea.descripcion estadoapuesta_descripcion, tea.comentario estadoapuesta_comentario,
+				ta.encuentro,ta.comentario
+    </sql>
+
+ 	<sql id="countSelect">
+		SELECT COUNT(1)
+	</sql>   
+
+	<sql id="apuestasFrom">
+		FROM t_apuestas ta,
+			 t_tipsters tt,
+			 t_tipos_apuesta tta,
+			 t_deportes td,
+			 t_estados_apuesta tea
+	</sql>
+
+	<sql id="apuestasJoin">
+		AND ta.tipster_id = tt.id
+		AND ta.tipo_id = tta.id
+		AND ta.deporte_id = td.id
+		AND ta.estado_id = tea.id
+	</sql>
+
+	<sql id="apuestasByIdFilter">
+		AND ta.id = #{id}
+	</sql>
+
+	<sql id="apuestasFilter">
+		<if test="criteria['tipsterId'] != null">
+			AND ta.tipster_id LIKE #{criteria.tipsterId}
+		</if>
+	</sql>
+
+	<sql id="apuestasSort">
+		<choose>
+			<when test="navigation.sortField != null">
+				ORDER BY ${navigation.sortField}
+				<if
+					test="navigation.sortField != null and navigation.sortOrder == -1">
+					DESC
+				</if>
+			</when>
+			<otherwise>
+				<if
+					test="navigation.sortFieldDefault != null and navigation.sortFieldDefault.size()>0">
+					ORDER BY
+					<foreach collection="navigation.sortFieldDefault"
+						separator="," index="id" item="field">
+						${field}
+						<if
+							test="navigation.sortOrderDefault != null and navigation.sortOrderDefault.size() > idx and navigation.sortOrderDefault[id] == -1 ">
+							DESC
+						</if>
+					</foreach>
+				</if>
+				<if
+					test="navigation.sortFieldDefault == null or navigation.sortFieldDefault.size() == 0">
+					ORDER BY ta.id
+				</if>
+			</otherwise>
+		</choose>
+	</sql>
 
 </mapper>

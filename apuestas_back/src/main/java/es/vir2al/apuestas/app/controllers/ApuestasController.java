@@ -1,7 +1,11 @@
 package es.vir2al.apuestas.app.controllers;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.validation.Valid;
 
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,17 +13,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.vir2al.apuestas.app.domain.ApuestaVO;
+import es.vir2al.apuestas.app.domain.request.ApuestaRequest;
 import es.vir2al.apuestas.app.services.ApuestasService;
+import es.vir2al.apuestas.fwk.domain.requests.NavigationInfoRequest;
 import es.vir2al.apuestas.fwk.domain.responses.DataResponse;
+import es.vir2al.apuestas.fwk.domain.responses.DataTableResponse;
 import es.vir2al.apuestas.fwk.exceptions.BaseException;
+import es.vir2al.apuestas.fwk.utils.ListUtils;
 import es.vir2al.apuestas.fwk.utils.constants.ResponseConstants;
 
 @CrossOrigin(origins = { "http://localhost:4200", "*" })
@@ -34,6 +45,83 @@ public class ApuestasController {
 
 	@Autowired
 	private ApuestasService apuestasService;
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+	public ResponseEntity<DataResponse<ApuestaVO>> getContactoById(@PathVariable Integer id) {
+
+        LOGGER.debug("INICIO apuestas.getContactoById()");
+
+        DataResponse<ApuestaVO> response = new DataResponse<ApuestaVO>();
+
+        try {
+
+            response.setData(this.apuestasService.getApuestaById(id));
+        
+        } catch (BaseException be) {
+
+			LOGGER.error("{} - CODE: {}", be.getMessage(), be.getCode());
+			response.setCode(be.getCode());
+
+		} catch (Exception e) {
+
+			LOGGER.error(e.getMessage());
+			response.setCode(ResponseConstants.UNEXPECTED_ERROR);
+
+		}
+
+        LOGGER.debug("FINAL apuestas.getContactoById()");
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
+
+    }
+
+	@GetMapping()
+	@PreAuthorize("hasAnyRole('ADMIN','USER')")
+	public ResponseEntity<?> getProyectos(@RequestParam Map<String, String> params, NavigationInfoRequest nav) {
+
+        LOGGER.info("PARAMETROS {}", params);
+		LOGGER.info("NAVIGATION {}", nav);
+
+        DataTableResponse<ApuestaVO> response = new DataTableResponse<ApuestaVO>();
+        List<ApuestaVO> lstData = null;
+        Integer total = 0;
+        ApuestaRequest criteria = new ApuestaRequest();
+
+		RowBounds rb = (nav != null && nav.getRows() > 0) ? new RowBounds(nav.getFirst(), nav.getRows())
+				: new RowBounds(RowBounds.NO_ROW_OFFSET, RowBounds.NO_ROW_LIMIT);
+
+        try {
+            
+            criteria = this.objMapper.convertValue(params, ApuestaRequest.class);
+
+            lstData = this.apuestasService.getApuestas(criteria, nav, rb);
+
+            if (!ListUtils.isEmpty(lstData)) {
+
+                total = this.apuestasService.getApuestasCount(criteria);
+
+            }
+
+            response.setCode(ResponseConstants.RESPONSE_OK);
+            response.setData(lstData);
+            response.setTotal(total);
+
+		} catch (BaseException be) {
+
+			LOGGER.error(be.getMessage());
+			response.setCode(ResponseConstants.NOT_DEFINED);
+
+		} catch (Exception e) {
+
+			LOGGER.error(e.getMessage());
+			response.setCode(ResponseConstants.UNEXPECTED_ERROR);
+
+		}
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
 
 	@PostMapping()
 	@PreAuthorize("hasAnyRole('ADMIN','USER')")

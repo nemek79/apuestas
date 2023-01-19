@@ -106,7 +106,41 @@
 
 	<sql id="apuestasFilter">
 		<if test="criteria['tipsterId'] != null">
-			AND ta.tipster_id LIKE #{criteria.tipsterId}
+			AND ta.tipster_id = #{criteria.tipsterId}
+		</if>
+		<if test="criteria['deporteId'] != null">
+			AND ta.deporte_id = #{criteria.deporteId}
+		</if>
+		<if test="criteria['estadoId'] != null">
+			AND ta.estado_id = #{criteria.estadoId}
+		</if>
+		<if test="criteria['tipoId'] != null">
+			AND ta.tipo_id = #{criteria.tipoId}
+		</if>
+		<if test="criteria['reto'] != null and criteria['reto'] == true">
+			AND ta.reto = 1
+		</if>
+		<if test="criteria['live'] != null and criteria['live'] == true">
+			AND ta.live = 1
+		</if>
+		<if test="criteria['reto'] != null and riteria['reto'] == false">
+			AND ta.reto = 0
+		</if>
+		<if test="criteria['live'] != null and criteria['live'] == false">
+			AND ta.live = 0
+		</if>
+		<if test="criteria['fechaIni'] != null and criteria['fechaFin'] != null">
+			AND ta.fecha_evento BETWEEN  DATE_FORMAT(#{criteria.fechaIni},'%Y-%m-%d') AND DATE_FORMAT(#{criteria.fechaFin},'%Y-%m-%d')
+		</if>
+		<if test="criteria['fechaIni'] != null and !criteria['fechaFin'] == null">
+			AND ta.fecha_evento =  DATE_FORMAT(#{criteria.fechaIni},'%Y-%m-%d')	
+		</if>
+		<if test="criteria['stake'] != null">
+			AND ta.stake = #{criteria.stake}
+		</if>
+		<if test="criteria['evento'] != null">
+			<bind name="evento" value="'%' + criteria['evento'] + '%'" />
+			AND ta.evento LIKE #{evento}
 		</if>
 	</sql>
 

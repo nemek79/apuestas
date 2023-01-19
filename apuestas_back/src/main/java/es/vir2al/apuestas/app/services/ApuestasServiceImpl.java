@@ -13,6 +13,7 @@ import es.vir2al.apuestas.app.domain.request.ApuestaRequest;
 import es.vir2al.apuestas.app.repositories.ApuestasDAO;
 import es.vir2al.apuestas.fwk.domain.requests.NavigationInfoRequest;
 import es.vir2al.apuestas.fwk.exceptions.BaseException;
+import es.vir2al.apuestas.fwk.utils.constants.ResponseConstants;
 
 @Service("apuestasService")
 public class ApuestasServiceImpl implements ApuestasService {
@@ -32,6 +33,10 @@ public class ApuestasServiceImpl implements ApuestasService {
 
     @Override
     public ApuestaVO getApuestaById(Integer id) throws BaseException {
+
+        if (id == null || id <= 0) {
+            throw new BaseException(ResponseConstants.INPUT_DATA_ERROR, "El identificador {"+id+"} no es correcto");
+        }
         
         return this.apuestasDAO.getApuestaById(id);
     }

@@ -18,6 +18,9 @@ import { TokenInterceptor } from './fwk/interceptors/token.interceptor';
 import { registerLocaleData } from '@angular/common';
 import { LoginComponent } from './components/movil/login/login.component';
 import { MainFrameComponent } from './components/movil/layout/main-frame/main-frame.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
 
 registerLocaleData(localeEs, 'es-ES');
 
@@ -33,7 +36,13 @@ registerLocaleData(localeEs, 'es-ES');
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      preventDuplicates: true
+    }),
   ],
   providers: [
     // Framework INI

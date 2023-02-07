@@ -1,0 +1,113 @@
+  <div class="container">
+    <main>
+
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Crear Apuesta</h4>
+        <form [formGroup]="formApuesta">
+          <div class="row g-3">
+            <div class="col-sm-4">
+              <label for="fechaEventoIn" class="form-label">Fecha Evento</label>
+              <input type="text" class="form-control" formControlName="fechaEventoIn">
+            </div>
+
+            <div class="col-sm-4">
+              <label for="eventoIn" class="form-label">Evento</label>
+              <input type="text" class="form-control" formControlName="eventoIn">
+            </div>
+
+            <div class="col-sm-4">
+              <label for="apuestaIn" class="form-label">Apuesta</label>
+              <input type="text" class="form-control" formControlName="apuestaIn">
+            </div>
+
+            <div class="col-sm-6">
+              <label for="encuentroIn" class="form-label">Encuentro</label>
+              <input type="text" class="form-control" formControlName="encuentroIn">
+            </div>
+
+            <div class="col-sm-6">
+              <label for="comentarioIn" class="form-label">Comentario</label>
+              <input type="text" class="form-control" formControlName="comentarioIn">
+            </div>
+
+            <div class="col-md-4">
+              <label for="tipsterIn" class="form-label">Tipster</label>
+              <select class="form-select" formControlName="tipsterIn">
+                <option value="1">David Alonso</option>
+                <option value="2">Apuestas JC</option>
+                <option value="3">KinFutbol</option>
+                <option value="4">KinNBA</option>
+                <option value="5">Lobo</option>
+                <option value="6">Pensador Apuestas</option>
+                <option value="7">TPO</option>
+                <option value="8">Pensador Internacional</option>
+                <option value="9">Pensador Baloncesto</option>
+                <option value="10">Tipster Pro</option>
+                <option value="11">Tenis Mesa</option>
+                <option value="12">JM Pro</option>
+                <option value="13">Apuesta Segura</option>
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label for="tipoIn" class="form-label">Tipo</label>
+              <select class="form-select" formControlName="tipoIn">
+                <option value="1">Free</option>
+                <option value="2">Premium</option>
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label for="deporteIn" class="form-label">Deporte</label>
+              <select class="form-select" formControlName="deporteIn">
+                <option value="1">Fútbol</option>
+                <option value="2">Baloncesto</option>
+                <option value="3">Rugby</option>
+                <option value="4">Tenis</option>
+                <option value="5">Tenis Mesa</option>
+                <option value="99">Desconocido</option>
+              </select>
+            </div>
+
+            <div class="col-sm-4">
+              <label for="stakeIn" class="form-label">Stake</label>
+              <input type="text" class="form-control" formControlName="stakeIn">
+            </div>
+
+            <div class="col-sm-4">
+              <label for="cuotaIn" class="form-label">Cuota</label>
+              <input type="text" class="form-control" formControlName="cuotaIn">
+            </div>
+
+            <div class="col-sm-4">
+              <label for="cantidadApostadaIn" class="form-label">Cantidad Apostada</label>
+              <input type="text" class="form-control" formControlName="cantidadApostadaIn">
+            </div>
+
+          </div>
+
+          <div class="mt-4">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" formControlName="liveIn" value="value" />
+              <label class="form-check-label" for="liveIn">Live</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" formControlName="retoIn" value="value" />
+              <label class="form-check-label" for="retoIn">Reto</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" formControlName="modificadoIn" value="value" />
+              <label class="form-check-label" for="modificadoIn">Modificado</label>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <button class="w-100 btn btn-primary btn-lg" type="submit" (click)="crearApuesta()">Crear apuesta</button>
+        </form>
+      </div>
+    </main>
+  </div>
+

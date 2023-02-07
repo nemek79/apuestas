@@ -11,7 +11,7 @@ export class NavigationInfo {
 
     this.first = 0;
     this.rows = 20;
-    this.sortField = '';
+    this.sortField = null;
     this.sortOrder = 0;
     this.sortFieldDefault = [];
     this.sortOrderDefault = [];

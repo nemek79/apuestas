@@ -15,12 +15,15 @@ import { HttpInterceptorService } from './fwk/services/http-interceptor.service'
 import { CommonsRestService } from './fwk/services/commonsRest.service';
 import { StorageService } from './fwk/services/storage.service';
 import { TokenInterceptor } from './fwk/interceptors/token.interceptor';
-import { registerLocaleData } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import { LoginComponent } from './components/movil/login/login.component';
 import { MainFrameComponent } from './components/movil/layout/main-frame/main-frame.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
+import { CrearComponent } from './components/movil/apuestas/crear/crear.component';
+import { RutaAnterior } from './fwk/guards/ruta-anterior.guard';
+import { ApuestasService } from './services/apuestas.service';
 
 registerLocaleData(localeEs, 'es-ES');
 
@@ -31,7 +34,8 @@ registerLocaleData(localeEs, 'es-ES');
     HeaderComponent,
     DashboardComponent,
     LoginComponent,
-    MainFrameComponent
+    MainFrameComponent,
+    CrearComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +51,9 @@ registerLocaleData(localeEs, 'es-ES');
   providers: [
     // Framework INI
     AuthService,
+    RutaAnterior,
+    // Framework FIN
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
@@ -61,6 +68,7 @@ registerLocaleData(localeEs, 'es-ES');
     CommonsRestService,
     StorageService,
     // Framework FIN
+    ApuestasService
   ],
   bootstrap: [AppComponent]
 })

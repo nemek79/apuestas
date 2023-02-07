@@ -21,6 +21,7 @@ public class ApuestaVO implements Serializable {
     private TipoApuestaVO tipoApuesta;
     private Boolean live;
     private Boolean reto;
+    private Boolean modificado;
     private DeporteVO deporte;
     private String evento;
     private String apuesta;
@@ -41,6 +42,7 @@ public class ApuestaVO implements Serializable {
         this.tipoApuesta = null;
         this.live = false;
         this.reto = false;
+        this.modificado = false;
         this.deporte = null;
         this.evento = null;
         this.apuesta = null;

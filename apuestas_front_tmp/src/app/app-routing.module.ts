@@ -7,6 +7,7 @@ import { RoleGuard } from './fwk/guards/role.guard';
 import { RutaAnterior } from './fwk/guards/ruta-anterior.guard';
 import { LoginComponent } from './components/movil/login/login.component';
 import { MainFrameComponent } from './components/movil/layout/main-frame/main-frame.component';
+import { CrearComponent } from './components/movil/apuestas/crear/crear.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,12 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
+        canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'},
+        canDeactivate: [RutaAnterior]
+      },
+      {
+        path: 'apuestas/crear',
+        component: CrearComponent,
         canActivate: [AuthGuard, RoleGuard], data: {role: 'ROLE_ADMIN'},
         canDeactivate: [RutaAnterior]
       },

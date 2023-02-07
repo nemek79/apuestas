@@ -48,9 +48,9 @@ public class ApuestasController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
-	public ResponseEntity<DataResponse<ApuestaVO>> getContactoById(@PathVariable Integer id) {
+	public ResponseEntity<DataResponse<ApuestaVO>> getApuestaById(@PathVariable Integer id) {
 
-        LOGGER.debug("INICIO apuestas.getContactoById()");
+        LOGGER.debug("INICIO apuestas.getApuestaById()");
 
         DataResponse<ApuestaVO> response = new DataResponse<ApuestaVO>();
 
@@ -70,7 +70,7 @@ public class ApuestasController {
 
 		}
 
-        LOGGER.debug("FINAL apuestas.getContactoById()");
+        LOGGER.debug("FINAL apuestas.getApuestaById()");
 
         return new ResponseEntity<>(response,HttpStatus.OK);
 
@@ -78,7 +78,7 @@ public class ApuestasController {
 
 	@GetMapping()
 	@PreAuthorize("hasAnyRole('ADMIN','USER')")
-	public ResponseEntity<?> getProyectos(@RequestParam Map<String, String> params, NavigationInfoRequest nav) {
+	public ResponseEntity<?> getApuestas(@RequestParam Map<String, String> params, NavigationInfoRequest nav) {
 
         LOGGER.info("PARAMETROS {}", params);
 		LOGGER.info("NAVIGATION {}", nav);

@@ -11,7 +11,7 @@ export class CommonsRestService {
   constructor(private httpClient: HttpClient) { }
 
 
-  protected getData(url: string, criteria: any): Observable<any> {
+  public getData(url: string, criteria: any): Observable<any> {
 
     if (criteria) {
 
@@ -33,7 +33,7 @@ export class CommonsRestService {
 
   }
 
-  protected getListData(url: string, navInfo: NavigationInfo, criteria: any): Observable<any> {
+  public async getListData(url: string, navInfo: NavigationInfo, criteria: any) {
 
     url += '?';
 
@@ -59,7 +59,10 @@ export class CommonsRestService {
 
     url = url.slice(0, -1);
 
-    return this.httpClient.get<any>(url);
+    const resp = await this.httpClient.get<any>(url).toPromise();
+
+    return resp;
+
   }
 
 }

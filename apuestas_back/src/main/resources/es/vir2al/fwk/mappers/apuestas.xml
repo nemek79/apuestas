@@ -65,10 +65,30 @@
         INSERT INTO t_apuestas(id,fecha_alta,fecha_evento,tipster_id,
 								tipo_id,live,reto,deporte_id,evento,apuesta,stake,cuota,cantidad_apostada,
                                 bruto,estado_id,encuentro,comentario)
-        VALUES (null,#{criteria.fechaAlta},#{criteria.fechaEvento},#{criteria.tipster.id},#{criteria.tipoApuesta.id},#{criteria.live},#{criteria.reto}
+        VALUES (null,current_date,#{criteria.fechaEvento},#{criteria.tipster.id},#{criteria.tipoApuesta.id},#{criteria.live},#{criteria.reto}
                 ,#{criteria.deporte.id},#{criteria.evento},#{criteria.apuesta},#{criteria.stake},#{criteria.cuota},#{criteria.cantidadApostada},#{criteria.bruto}
                 ,#{criteria.estadoApuesta.id},#{criteria.encuentro},#{criteria.comentario})
     </insert>
+
+	<update id="updateApuesta">
+		UPDATE t_apuestas
+		   SET fecha_evento = #{criteria.fechaEvento},
+		       tipster_id = #{criteria.tipster.id},
+			   tipo_id = #{criteria.tipoApuesta.id},
+			   deporte_id = #{criteria.deporte.id},
+			   live = #{criteria.live},
+			   reto = #{criteria.reto},
+			   evento = #{criteria.evento},
+			   apuesta = #{criteria.apuesta},
+			   stake = #{criteria.stake},
+			   cuota = #{criteria.cuota},
+			   cantidad_apostada = #{criteria.cantidadApostada},
+			   bruto = #{criteria.bruto},
+			   estado_id = #{criteria.estadoApuesta.id},
+			   encuentro = #{criteria.encuentro},
+			   comentario = #{criteria.comentario}
+		 WHERE id = #{id}
+	</update>
 
     <sql id="apuestasSelect">
         SELECT ta.id,ta.fecha_alta,ta.fecha_evento,

@@ -35,7 +35,7 @@ public class ApuestasServiceImpl implements ApuestasService {
     public ApuestaVO getApuestaById(Integer id) throws BaseException {
 
         if (id == null || id <= 0) {
-            throw new BaseException(ResponseConstants.INPUT_DATA_ERROR, "El identificador {"+id+"} no es correcto");
+            throw new BaseException(ResponseConstants.INPUT_DATA_ERROR, "El identificador {"+id+"} no es correcto.");
         }
         
         return this.apuestasDAO.getApuestaById(id);
@@ -54,6 +54,17 @@ public class ApuestasServiceImpl implements ApuestasService {
 
         return this.apuestasDAO.getApuestasCount(criteria);
     
+    }
+
+    @Override
+    public void updateApuesta(Integer id, ApuestaVO data) throws BaseException {
+    
+        if (id == null || id <=0 || data == null || data.getId() != id) {
+            throw new BaseException(ResponseConstants.INPUT_DATA_ERROR, "El objeto a actualizar no es correcto.");
+        }
+    
+        this.apuestasDAO.updateApuesta(id, data);
+        
     }
     
 }

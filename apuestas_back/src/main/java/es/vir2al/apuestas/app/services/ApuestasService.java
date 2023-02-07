@@ -40,4 +40,12 @@ public interface ApuestasService {
      */
     public Integer getApuestasCount(ApuestaRequest criteria) throws BaseException;
 
+    /**
+     * Actualiza la apuesta 
+     * @param id
+     * @param data
+     * @throws BaseException
+     */
+    public void updateApuesta(Integer id, ApuestaVO data) throws BaseException;
+
 }

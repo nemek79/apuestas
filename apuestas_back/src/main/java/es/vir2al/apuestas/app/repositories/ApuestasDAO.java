@@ -29,4 +29,8 @@ public interface ApuestasDAO {
             @Param("criteria") ApuestaRequest criteria
         );
 
+    public Integer updateApuesta(
+            @Param("id") Integer id,
+            @Param("criteria") ApuestaVO data
+        );
 }

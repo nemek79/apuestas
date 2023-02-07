@@ -1,0 +1,28 @@
+<main class="form-signin w-100 m-auto">
+  <form [formGroup]="formLogin">
+   <h1 class="h3 mb-3 fw-normal">Introduce tus datos</h1>
+
+    <div class="form-floating">
+      <input type="text" class="form-control" formControlName="userIn">
+      <label for="userIn">Usuario</label>
+    </div>
+    <div class="form-floating">
+      <input
+        type="password"
+        class="form-control"
+        formControlName="passwordIn"
+        [ngClass]="{'is-invalid': f.passwordIn.invalid && statusSubmited}"
+      >
+      <label for="passwordIn">Password</label>
+    </div>
+
+    <button
+      class="w-100 btn btn-lg btn-primary"
+      type="submit"
+      (click)="login()"
+    >
+        Entrar
+    </button>
+    <p class="mt-5 mb-3 text-muted">&copy; ViR2aL</p>
+  </form>
+</main>

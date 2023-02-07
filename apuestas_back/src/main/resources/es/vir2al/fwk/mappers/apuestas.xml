@@ -15,6 +15,7 @@
         <result property="tipoApuesta.comentario" column="tipoapuesta_comentario" /> 
         <result property="live" column="live" />
         <result property="reto" column="reto" />
+		<result property="modificado" column="modificado" />
         <result property="deporte.id" column="deporte_id" />
         <result property="deporte.descripcion" column="deporte_descripcion" />
         <result property="deporte.comentario" column="deporte_comentario" />  
@@ -66,8 +67,10 @@
 								tipo_id,live,reto,deporte_id,evento,apuesta,stake,cuota,cantidad_apostada,
                                 bruto,estado_id,encuentro,comentario)
         VALUES (null,current_date,#{criteria.fechaEvento},#{criteria.tipster.id},#{criteria.tipoApuesta.id},#{criteria.live},#{criteria.reto}
+                                bruto,estado_id,encuentro,comentario,modificado)
+        VALUES (null,#{criteria.fechaAlta},#{criteria.fechaEvento},#{criteria.tipster.id},#{criteria.tipoApuesta.id},#{criteria.live},#{criteria.reto}
                 ,#{criteria.deporte.id},#{criteria.evento},#{criteria.apuesta},#{criteria.stake},#{criteria.cuota},#{criteria.cantidadApostada},#{criteria.bruto}
-                ,#{criteria.estadoApuesta.id},#{criteria.encuentro},#{criteria.comentario})
+                ,#{criteria.estadoApuesta.id},#{criteria.encuentro},#{criteria.comentario},#{criteria.modificado})
     </insert>
 
 	<update id="updateApuesta">
@@ -98,7 +101,7 @@
 				ta.deporte_id deporte_id, td.descripcion deporte_descripcion, td.comentario deporte_comentario,
 				ta.evento,ta.apuesta,ta.stake,ta.cuota,ta.cantidad_apostada,ta.bruto,
 				ta.estado_id estadoapuesta_id, tea.descripcion estadoapuesta_descripcion, tea.comentario estadoapuesta_comentario,
-				ta.encuentro,ta.comentario
+				ta.encuentro,ta.comentario,ta.modificado
     </sql>
 
  	<sql id="countSelect">

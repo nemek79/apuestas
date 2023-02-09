@@ -44,15 +44,15 @@ export class CrearComponent implements OnInit {
 
       this.apuesta.apuesta = this.formApuesta.controls['apuestaIn'].value;
       this.apuesta.bruto = 0;
-      this.apuesta.cantidad_apostada = this.formApuesta.controls['cantidadApostadaIn'].value;
+      this.apuesta.cantidadApostada = this.formApuesta.controls['cantidadApostadaIn'].value;
       this.apuesta.comentario = this.formApuesta.controls['comentarioIn'].value;
       this.apuesta.cuota = this.formApuesta.controls['cuotaIn'].value;
       this.apuesta.deporte.id = this.formApuesta.controls['deporteIn'].value;
       this.apuesta.encuentro = this.formApuesta.controls['encuentroIn'].value;
       this.apuesta.estado.id = 1;
       this.apuesta.evento = this.formApuesta.controls['eventoIn'].value;
-      this.apuesta.fecha_alta = this.datepipe.transform((new Date), 'yyyy-MM-dd');
-      this.apuesta.fecha_evento = this.formApuesta.controls['fechaEventoIn'].value;
+      this.apuesta.fechaAlta = this.datepipe.transform((new Date), 'yyyy-MM-dd');
+      this.apuesta.fechaEvento = this.formApuesta.controls['fechaEventoIn'].value;
       this.apuesta.id = null;
       this.apuesta.live = (this.formApuesta.value['liveIn']?true:false);
       this.apuesta.modificado = (this.formApuesta.value['modificadoIn']?true:false);

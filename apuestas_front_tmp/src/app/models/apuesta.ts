@@ -6,8 +6,8 @@ import { Tipster } from "./tipster";
 export class Apuesta {
 
   id: number;
-  fecha_alta: string;
-  fecha_evento: string;
+  fechaAlta: string;
+  fechaEvento: string;
   tipster: Tipster;
   tipoApuesta: TipoApuesta;
   deporte: Deporte;
@@ -21,7 +21,7 @@ export class Apuesta {
   apuesta: string;
   stake: number;
   cuota: number;
-  cantidad_apostada: number;
+  cantidadApostada: number;
   bruto: number;
 
   constructor() {

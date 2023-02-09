@@ -65,8 +65,6 @@
     <insert id="createApuesta" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO t_apuestas(id,fecha_alta,fecha_evento,tipster_id,
 								tipo_id,live,reto,deporte_id,evento,apuesta,stake,cuota,cantidad_apostada,
-                                bruto,estado_id,encuentro,comentario)
-        VALUES (null,current_date,#{criteria.fechaEvento},#{criteria.tipster.id},#{criteria.tipoApuesta.id},#{criteria.live},#{criteria.reto}
                                 bruto,estado_id,encuentro,comentario,modificado)
         VALUES (null,#{criteria.fechaAlta},#{criteria.fechaEvento},#{criteria.tipster.id},#{criteria.tipoApuesta.id},#{criteria.live},#{criteria.reto}
                 ,#{criteria.deporte.id},#{criteria.evento},#{criteria.apuesta},#{criteria.stake},#{criteria.cuota},#{criteria.cantidadApostada},#{criteria.bruto}

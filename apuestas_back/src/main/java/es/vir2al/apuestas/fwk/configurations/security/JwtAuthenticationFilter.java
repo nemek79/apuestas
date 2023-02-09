@@ -40,24 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     	
     	try {
     		
-    		String[] profile = this.environment.getActiveProfiles();
-    		
-    		LOGGER.debug("Profile: {} - User: {}",profile[0],jwt);
-    		
-    		if (!profile[0].equals(SecurityConstants.PROD_PROFILE) && StringUtils.hasText(jwt) && jwt.equals(SecurityConstants.TEST_REQUEST_USER)) {
-    			
-    			user = new UserVO(
-    						jwt,
-    						SecurityConstants.TEST_ROLE_USER,
-    						SecurityConstants.APPLICATION
-    					);
-    			
-	    		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-	    		authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-	    		
-	    		SecurityContextHolder.getContext().setAuthentication(authentication);
-    			
-    		} else if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
+		 if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
 	    		
 					user = new UserVO(tokenProvider.getInfo(jwt,SecurityConstants.JWT_USERNAME),
 														tokenProvider.getInfo(jwt,SecurityConstants.JWT_AUTHS),

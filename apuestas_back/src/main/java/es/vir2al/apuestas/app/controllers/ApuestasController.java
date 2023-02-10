@@ -184,4 +184,41 @@ public class ApuestasController {
 
     }
 
+	@PutMapping("/estado/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN','USER')")
+	public ResponseEntity<?> updateEstadoApuesta(@PathVariable Integer id, @RequestParam Map<String, String> params) {
+
+        LOGGER.info("PARAMETROS {}",id);
+
+        BaseResponse response = new BaseResponse();
+        Integer nuevoEstado = 0;
+        
+        
+        try {
+            
+            nuevoEstado = Integer.parseUnsignedInt(params.get("estado"));
+
+            if (nuevoEstado < 2 || nuevoEstado > 4) 
+                throw new BaseException(ResponseConstants.INPUT_DATA_ERROR, "El estado a actualizar no es correcto.");
+
+
+
+            this.apuestasService.updateEstadoApuesta(id, nuevoEstado);
+
+        } catch (BaseException be) {
+
+			LOGGER.error("{} - CODE: {}",be.getMessage(),be.getCode());
+			response.setCode(be.getCode());
+
+        } catch (Exception e) {
+
+			LOGGER.error(e.getMessage());
+			response.setCode(ResponseConstants.UNEXPECTED_ERROR);
+            
+        }
+    
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
+
 }

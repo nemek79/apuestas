@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { NavigationInfo } from 'src/app/fwk/models/NavigationInfo';
 import { Apuesta } from 'src/app/models/apuesta';
@@ -18,7 +19,8 @@ export class DashboardComponent implements OnInit {
   public criteria: ApuestaRequest;
 
   constructor(
-    private apuestasSRV: ApuestasService
+    private apuestasSRV: ApuestasService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -26,29 +28,61 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  private async cargarApuestas() {
+  private cargarApuestas() {
 
     this.criteria = new ApuestaRequest();
 
     this.criteria.estadoId = 1; // Estado pendiente
 
-    const resultado:any = await this.apuestasSRV.getApuestas(this.navigation,this.criteria);
+    this.apuestasSRV.getApuestas(this.navigation,this.criteria).subscribe(
+      resp => {
+        if (resp.code === 0) {
 
-    if (resultado.code == 0) {
+          this.apuestasList = resp.data;
+          this.numTotalApuestas = resp.total;
 
-      this.apuestasList = resultado.data;
-      this.numTotalApuestas = resultado.total;
+        } else {
+          this.toastr.error('Error!', 'La acción no se ha podido realizar.', {
+            timeOut: 5000,
+          })
+        }
+      },
+      err => {
+        console.log('ERROR')
+        console.log(err)
 
-      console.log(this.apuestasList);
-      console.log(this.numTotalApuestas);
-
-    } else {
-      console.error('Error al obtener la lista de apuestas.')
-    }
-
+        this.toastr.error('Error!', 'Se ha producido un error en la conexión.', {
+          timeOut: 5000,
+        });
+      }
+    );
 
   }
 
+
+  public actualizarEstadoApuesta(id_apuesta: number, id_estado: number): void {
+
+    /*
+      let apuesta = this.apuestasList.find(
+        apuesta => apuesta.id = id_apuesta
+      );
+    */
+
+    this.apuestasSRV.updateEstadoApuesta(id_apuesta,id_estado).subscribe(
+      resp => {
+        this.cargarApuestas();
+      },
+      err => {
+        console.log('ERROR')
+        console.log(err)
+
+        this.toastr.error('Error!', 'Se ha producido un error en la conexión.', {
+          timeOut: 5000,
+        });
+      }
+    );
+
+  }
 
 
 }

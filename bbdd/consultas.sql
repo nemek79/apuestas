@@ -14,20 +14,20 @@ values (null,'2023/02/02','2023/02/03',4,2,0,0,2,'NBA','HA',4,1.57,4,0,1,'LOS AN
 select  id,fecha_evento,tipster_id,tipo_id ,reto ,evento,apuesta,stake,cuota,cantidad_apostada ,encuentro,comentario,estado_id 
 from t_apuestas
 where 1=1
-   and fecha_evento = '2023/02/02'
+   and fecha_evento = '2023/02/09'
   -- and tipster_id = 4
   and tipo_id in (1,2) -- 1 free / 2 premium
- --  and estado_id = 1 -- 1 pendiente / 2 ganada / 3 perdida / 4 push
+   and estado_id = 1 -- 1 pendiente / 2 ganada / 3 perdida / 4 push
  -- and id in (322)
  order by id desc;
 
 -- actualizar apuesta
 update t_apuestas
- -- set TIPSTER_ID = 6 --  evento = 'PORTUGAL'  -- fecha_evento  = '2023-01-19'
+ -- set TIPSTER_ID = 14 --  evento = 'PORTUGAL'  -- fecha_evento  = '2023-01-19'
   set bruto = cuota * cantidad_apostada, estado_id = 2 -- ganada
  -- set bruto = 0, estado_id = 3 -- perdida
  -- set bruto = cantidad_apostada , estado_id = 4 -- push
-where id in (545)
+where id in (619)
 
 -- Cantidad en pendiente
  select fecha_evento Fecha,SUM(cantidad_apostada) 'Cantidad Apostada',SUM(cantidad_apostada * cuota) Potencial

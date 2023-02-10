@@ -48,4 +48,9 @@ public interface ApuestasService {
      */
     public void updateApuesta(Integer id, ApuestaVO data) throws BaseException;
 
+    /**
+     * Actualiza el estado de una apuesta
+     */
+    public void updateEstadoApuesta(Integer id, Integer estadoId) throws BaseException;
+
 }

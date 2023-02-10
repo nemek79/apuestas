@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.vir2al.apuestas.app.domain.ApuestaVO;
+import es.vir2al.apuestas.app.domain.EstadoApuestaVO;
 import es.vir2al.apuestas.app.domain.request.ApuestaRequest;
 import es.vir2al.apuestas.app.repositories.ApuestasDAO;
 import es.vir2al.apuestas.fwk.domain.requests.NavigationInfoRequest;
@@ -66,5 +67,35 @@ public class ApuestasServiceImpl implements ApuestasService {
         this.apuestasDAO.updateApuesta(id, data);
         
     }
+
+    @Override
+    public void updateEstadoApuesta(Integer id, Integer estadoId) throws BaseException {
+
+        ApuestaVO apuesta = null;
+
+        apuesta = this.apuestasDAO.getApuestaById(id);
+
+        if (apuesta == null)
+            throw new BaseException(ResponseConstants.INPUT_DATA_ERROR, "No existe la apuesta a actualizar.");
     
+        apuesta.setEstadoApuesta(this.getEstadoApuestaTemporal(estadoId));
+        apuesta.calcularBruto();
+
+        this.apuestasDAO.updateApuesta(id, apuesta);
+        
+    }
+
+    /**
+     * TODO: eliminar cuando tengamos los estados desde la base de datos
+     * @param estadoId
+     * @return
+     */
+    private EstadoApuestaVO getEstadoApuestaTemporal(Integer estadoId) {
+
+        EstadoApuestaVO estado = new EstadoApuestaVO();
+
+        estado.setId(estadoId);
+
+        return estado;
+    }
 }

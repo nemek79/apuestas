@@ -24,6 +24,7 @@ import {ToastrModule} from 'ngx-toastr';
 import { CrearComponent } from './components/movil/apuestas/crear/crear.component';
 import { RutaAnterior } from './fwk/guards/ruta-anterior.guard';
 import { ApuestasService } from './services/apuestas.service';
+import { CommonsRestObsService } from './fwk/services/commonsRestObs.service';
 
 registerLocaleData(localeEs, 'es-ES');
 
@@ -66,6 +67,7 @@ registerLocaleData(localeEs, 'es-ES');
     },
     HttpLoaderService,
     CommonsRestService,
+    CommonsRestObsService,
     StorageService,
     // Framework FIN
     ApuestasService

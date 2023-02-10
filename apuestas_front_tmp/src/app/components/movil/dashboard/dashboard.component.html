@@ -2,14 +2,34 @@
 
   <div *ngFor="let apuesta of apuestasList">
 
-    <div class="card text-center">
+    <div class="card text-center mt-4">
       <div class="card-header">
-        {{apuesta.id}}
+        [{{apuesta.id}} / {{apuesta.fechaEvento}}] - {{apuesta.encuentro}} ({{apuesta.apuesta}})
       </div>
       <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <p class="card-text">
+          Tipster: {{apuesta.tipster.descripcion}} |
+          Stake: {{apuesta.stake}} |
+          Cantidad apostada: {{apuesta.cantidadApostada}}
+        </p>
+        <button
+          class="btn btn-success me-2"
+          (click)="actualizarEstadoApuesta(apuesta.id,2)"
+        >
+          Ganada
+        </button>
+        <button
+          class="btn btn-danger me-2"
+          (click)="actualizarEstadoApuesta(apuesta.id,3)"
+        >
+          Perdida
+        </button>
+        <button
+          class="btn btn-secondary me-2"
+          (click)="actualizarEstadoApuesta(apuesta.id,4)"
+        >
+         Push
+        </button>
       </div>
     </div>
 

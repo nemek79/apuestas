@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Apuesta } from 'src/app/models/apuesta';
@@ -35,8 +35,9 @@ export class CrearComponent implements OnInit {
 
   public crearApuesta(): void {
 
-    console.log('Live: ')
-    console.log(this.apuesta.live = (this.formApuesta.value['liveIn']));
+    console.log('CrearApuesta')
+
+    this.statusSubmited = true;
 
     if (this.formApuesta.valid) {
 
@@ -61,11 +62,28 @@ export class CrearComponent implements OnInit {
       this.apuesta.tipoApuesta.id = this.formApuesta.controls['tipoIn'].value;
       this.apuesta.tipster.id = this.formApuesta.controls['tipsterIn'].value;
 
-      console.log(this.apuesta)
+      this.apuestasSRV.saveApuesta(this.apuesta).subscribe(
+        resp => {
+          if (resp.code === 0) {
+            this.toastr.info('Info','La apuesta se ha creado con éxito!', {
+              timeOut: 5000,
+            });
+            this.route.navigate(['/movil/dashboard']);
+          } else {
+            this.toastr.error('Error!', 'La acción no se ha podido realizar.', {
+              timeOut: 5000,
+            })
+          }
+        },
+        err => {
+          console.log('ERROR')
+          console.log(err)
 
-      let apuestaCreada = this.apuestasSRV.saveApuesta(this.apuesta);
-
-      console.log(apuestaCreada);
+          this.toastr.error('Error!', 'Se ha producido un error en la conexión.', {
+            timeOut: 5000,
+          });
+        }
+      );
 
     }
 
@@ -93,6 +111,10 @@ export class CrearComponent implements OnInit {
       modificadoIn: ['']
     });
 
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.formApuesta.controls;
   }
 
 }

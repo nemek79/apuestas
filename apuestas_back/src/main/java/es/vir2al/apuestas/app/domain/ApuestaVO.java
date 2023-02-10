@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import es.vir2al.apuestas.app.utils.AppUtils;
 import es.vir2al.apuestas.app.utils.constants.GeneralAppConstants;
+import es.vir2al.apuestas.fwk.utils.NumberUtils;
 import es.vir2al.apuestas.fwk.utils.TimeUtils;
 import es.vir2al.apuestas.fwk.utils.constants.GeneralConstants;
 import lombok.AllArgsConstructor;
@@ -58,8 +59,21 @@ public class ApuestaVO implements Serializable {
 
     public Float calcularBruto() {
 
-        this.bruto = this.cantidadApostada * this.cuota;
+        if (this.estadoApuesta.getId() == 3) {
+            this.bruto = 0f;
+        } else {
+            this.bruto = NumberUtils.round((this.cantidadApostada * this.cuota),GeneralAppConstants.NUM_DECIMALS);
+        }
 
+        return this.bruto;
+    }
+
+    public Float calcularBruto(Float cantidad) {
+
+        if (this.estadoApuesta.getId() == 4) {
+            this.bruto = cantidad;
+        } 
+        
         return this.bruto;
     }
 

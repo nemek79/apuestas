@@ -23,7 +23,7 @@
         <result property="apuesta" column="apuesta" />    
         <result property="stake" column="stake" />
         <result property="cuota" column="cuota" />
-        <result property="cantidadApostada" column="cantidadApostada" />
+        <result property="cantidadApostada" column="cantidad_apostada" />
         <result property="bruto" column="bruto" />    
         <result property="estadoApuesta.id" column="estadoapuesta_id" />
         <result property="estadoApuesta.descripcion" column="estadoapuesta_descripcion" />

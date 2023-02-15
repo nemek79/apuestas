@@ -196,14 +196,18 @@ public class ApuestasController {
         
         try {
             
-            nuevoEstado = Integer.parseUnsignedInt(params.get("estado"));
+            nuevoEstado = Integer.parseUnsignedInt(params.get("estado")); 
 
-            if (nuevoEstado < 2 || nuevoEstado > 4) 
+            if (nuevoEstado == 2 || nuevoEstado == 3) {
+                this.apuestasService.updateEstadoApuesta(id, nuevoEstado);
+            } else if (nuevoEstado == 4) {
+                Float bruto = Float.parseFloat(params.get("bruto"));
+                this.apuestasService.updateEstadoApuestaPush(id, bruto);
+            } else {
                 throw new BaseException(ResponseConstants.INPUT_DATA_ERROR, "El estado a actualizar no es correcto.");
+            }
 
-
-
-            this.apuestasService.updateEstadoApuesta(id, nuevoEstado);
+            
 
         } catch (BaseException be) {
 

@@ -53,4 +53,9 @@ public interface ApuestasService {
      */
     public void updateEstadoApuesta(Integer id, Integer estadoId) throws BaseException;
 
+    /**
+     * Actualiza el estado a push con la cantidad indicada
+     */
+    public void updateEstadoApuestaPush(Integer id, Float cantidad) throws BaseException;
+
 }

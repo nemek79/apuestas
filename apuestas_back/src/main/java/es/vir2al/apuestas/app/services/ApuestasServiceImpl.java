@@ -85,6 +85,23 @@ public class ApuestasServiceImpl implements ApuestasService {
         
     }
 
+    @Override
+    public void updateEstadoApuestaPush(Integer id, Float cantidad) throws BaseException {
+
+        ApuestaVO apuesta = null;
+
+        apuesta = this.apuestasDAO.getApuestaById(id);
+
+        if (apuesta == null)
+            throw new BaseException(ResponseConstants.INPUT_DATA_ERROR, "No existe la apuesta a actualizar.");
+
+            apuesta.setEstadoApuesta(this.getEstadoApuestaTemporal(4));
+            apuesta.calcularBruto(cantidad);
+
+            this.apuestasDAO.updateApuesta(id, apuesta);
+    }
+
+
     /**
      * TODO: eliminar cuando tengamos los estados desde la base de datos
      * @param estadoId
@@ -98,4 +115,6 @@ public class ApuestasServiceImpl implements ApuestasService {
 
         return estado;
     }
+
+
 }

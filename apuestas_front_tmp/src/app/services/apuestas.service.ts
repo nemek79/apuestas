@@ -39,9 +39,17 @@ export class ApuestasService extends CommonsRestObsService {
     return this.getListData(urlEndpoint,navInfo,criteria);
   }
 
-  public updateEstadoApuesta(apuesta_id: number, estado_id: number): Observable<any> {
+  public updateEstadoApuesta(apuestaId: number, estadoId: number): Observable<any> {
 
-    const urlEndpoint = environment.urlBack + environment.urlApuestas + '/estado/' + apuesta_id + '?estado=' + estado_id;
+    const urlEndpoint = environment.urlBack + environment.urlApuestas + '/estado/' + apuestaId + '?estado=' + estadoId;
+
+    return this.http.put<any>(urlEndpoint,null);
+
+  }
+
+  public updateEstadoApuestaPush(apuestaId: number, bruto: string) {
+
+    const urlEndpoint = environment.urlBack + environment.urlApuestas + '/estado/' + apuestaId + '?estado=4&bruto=' + bruto;
 
     return this.http.put<any>(urlEndpoint,null);
 

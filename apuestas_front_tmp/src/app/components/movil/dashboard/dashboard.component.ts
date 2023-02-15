@@ -5,6 +5,8 @@ import { Apuesta } from 'src/app/models/apuesta';
 import { ApuestaRequest } from 'src/app/models/request/apuesta-request';
 import { ApuestasService } from 'src/app/services/apuestas.service';
 
+declare var window: any;
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -18,19 +20,30 @@ export class DashboardComponent implements OnInit {
   public navigation: NavigationInfo = new NavigationInfo();
   public criteria: ApuestaRequest;
 
+  public pushModal: any;
+
+  public apuestaId: number;
+
   constructor(
     private apuestasSRV: ApuestasService,
     private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
+    this.apuestaId = -1;
     this.cargarApuestas();
+    this.pushModal = new window.bootstrap.Modal(
+      document.getElementById('pushCantidadDialog')
+    );
+
   }
 
 
   private cargarApuestas() {
 
     this.criteria = new ApuestaRequest();
+
+    this.apuestasList = [];
 
     this.criteria.estadoId = 1; // Estado pendiente
 
@@ -59,6 +72,42 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  public push(apuestaId: number): void {
+
+    let apuesta:Apuesta = this.apuestasList.find(
+
+      apuesta => apuesta.id === apuestaId
+
+    );
+      console.log(apuestaId)
+      console.log(apuesta)
+
+    this.apuestaId = apuestaId;
+    (<HTMLInputElement>document.getElementById('cantidadPushIn')).value = apuesta.cantidadApostada+'';
+
+    this.pushModal.show();
+
+  }
+
+  public cerrarPushCantidadDialog(cantidad: string): void {
+
+    this.apuestasSRV.updateEstadoApuestaPush(this.apuestaId,cantidad).subscribe(
+      resp => {
+        this.cargarApuestas();
+        this.apuestaId = 0;
+        this.pushModal.hide();
+      },
+      err => {
+        console.log('ERROR')
+        console.log(err)
+
+        this.toastr.error('Error!', 'Se ha producido un error en la conexión.', {
+          timeOut: 5000,
+        });
+      }
+    );
+
+  }
 
   public actualizarEstadoApuesta(id_apuesta: number, id_estado: number): void {
 

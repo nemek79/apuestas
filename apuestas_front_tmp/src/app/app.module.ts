@@ -25,18 +25,22 @@ import { CrearComponent } from './components/movil/apuestas/crear/crear.componen
 import { RutaAnterior } from './fwk/guards/ruta-anterior.guard';
 import { ApuestasService } from './services/apuestas.service';
 import { CommonsRestObsService } from './fwk/services/commonsRestObs.service';
+import { DialogComponent } from './fwk/components/dialog/dialog.component';
 
 registerLocaleData(localeEs, 'es-ES');
 
 @NgModule({
   declarations: [
+    // Framework INI
+    DialogComponent,
+    // Framework FIN
     AppComponent,
     TestComponent,
     HeaderComponent,
     DashboardComponent,
     LoginComponent,
     MainFrameComponent,
-    CrearComponent
+    CrearComponent,
   ],
   imports: [
     BrowserModule,

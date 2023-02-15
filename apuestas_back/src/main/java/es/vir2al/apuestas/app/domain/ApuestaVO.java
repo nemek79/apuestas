@@ -117,4 +117,10 @@ public class ApuestaVO implements Serializable {
         return AppUtils.round(result, GeneralAppConstants.NUM_DECIMALS);
     }
 
+    public Float getPotencial() {
+
+        return this.cantidadApostada * this.cuota;
+
+    }
+
 }

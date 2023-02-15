@@ -86,7 +86,7 @@ public class ApuestaVO implements Serializable {
         switch (this.estadoApuesta.id) {
             case 1: // Pendiente
                 
-                result = (this.cantidadApostada * this.cuota) - this.cantidadApostada;
+                result = 0f;
 
                 break;
 
